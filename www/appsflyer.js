@@ -39,7 +39,15 @@ if(!window.CustomEvent) {
         var data = conversionData,
             event;
         if (typeof data === "string") {
-            data = JSON.parse(conversionData);
+            try {
+                data = JSON.parse(conversionData);
+            } catch (e) {
+                global.document.dispatchEvent(
+                    new CustomEvent('AppsFlyerParseError', {
+                        detail: conversionData
+                    })
+                );
+            }
         }
 		event = new CustomEvent('onInstallConversionDataLoaded', {'detail': data});
 		global.document.dispatchEvent(event);
