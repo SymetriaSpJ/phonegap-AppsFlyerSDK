@@ -1,0 +1,22 @@
+{
+  "name": "phonegap-appsflyersdk",
+  "version": "1.0.0",
+  "description": "Built against Phonegap >= 4.3.x. ## PhoneGap Build ## Add the following line to your config xml: ``` <gap:plugin name=\"com.appsflyer.phonegap.plugins.appsflyer\" version=\"1.0.1\" /> ``` Add following lines to your code to be able to initialize tracking with your own AppsFlyer dev key: ```javascript document.addEventListener(\"deviceready\", function(){     var args = [];     var devKey = \"xxXXXXXxXxXXXXxXXxxxx8\";   // your AppsFlyer devKey     args.push(devKey);     var userAgent = window.navigator.userAgent.toLowerCase();",
+  "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SymetriaSpJ/phonegap-AppsFlyerSDK.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/SymetriaSpJ/phonegap-AppsFlyerSDK/issues"
+  },
+  "homepage": "https://github.com/SymetriaSpJ/phonegap-AppsFlyerSDK#readme"
+}
