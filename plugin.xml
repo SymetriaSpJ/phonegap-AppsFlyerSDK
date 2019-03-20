@@ -41,12 +41,12 @@
                 <param name="android-package" value="com.appsflyer.cordova.plugin.AppsFlyerPlugin"/>
             </feature>
         </config-file>
-        <config-file target="AndroidManifest.xml" parent="/manifest">
+        <config-file file="app/src/main/AndroidManifest.xml" target="/manifest" mode="merge">
             <uses-permission android:name="android.permission.INTERNET"/>
             <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
             <uses-permission android:name="android.permission.READ_PHONE_STATE" />
         </config-file>
-        <config-file target="AndroidManifest.xml" parent="/manifest/application">
+        <edit-config file="app/src/main/AndroidManifest.xml" target="/manifest/application" mode="merge">
             <receiver android:name="com.appsflyer.MultipleInstallBroadcastReceiver" android:exported="true">
                 <intent-filter>
                     <action android:name="com.android.vending.INSTALL_REFERRER" />
