@@ -1,134 +1,100 @@
+<img src="https://www.appsflyer.com/wp-content/uploads/2016/11/logo-1.svg"  width="600">
 
-# PhoneGap AppsFlyer plugin for Android and iOS. 
+# Cordova AppsFlyer plugin for Android and iOS. 
 
-Built against Phonegap >= 4.3.x.
-## PhoneGap Build ##
-Add the following line to your config xml:
+[![npm version](https://badge.fury.io/js/cordova-plugin-appsflyer-sdk.svg)](https://badge.fury.io/js/cordova-plugin-appsflyer-sdk) [![Build Status](https://travis-ci.org/AppsFlyerSDK/cordova-plugin-appsflyer-sdk.svg?branch=master)](https://travis-ci.org/AppsFlyerSDK/cordova-plugin-appsflyer-sdk)
+
+----------
+**❗️Important** <br>
+Cordova AppsFlyer plugin version **4.4.0** and higher are meant to be used with **cordova-android@7.0.0**
+<br>For lower versions of cordova-android please use plugin version 4.3.3 available @ https://github.com/AppsFlyerSDK/cordova-plugin-appsflyer-sdk/tree/4.3.3
+
+----------
+🛠 In order for us to provide optimal support, we would kindly ask you to submit any issues to support@appsflyer.com
+
+*When submitting an issue please specify your AppsFlyer sign-up (account) email , your app ID , production steps, logs, code snippets and any additional relevant information.*
+
+----------
+
+
+
+## Table of content
+
+- [SDK versions](#plugin-build-for)
+- [Installation](#installation)
+- [Guides](#guides)
+- [Setup](#setup)
+- [API](#api) 
+- [Demo](#demo)  
+
+
+### <a id="plugin-build-for"> This plugin is built for
+
+- iOS AppsFlyerSDK **v4.8.10**
+- Android AppsFlyerSDK **v4.8.18**
+
+
+## <a id="installation">📲Installation
+
 ```
-<gap:plugin name="com.appsflyer.phonegap.plugins.appsflyer" version="1.0.1" />
+$ cordova plugin add cordova-plugin-appsflyer-sdk
 ```
-Add following lines to your code to be able to initialize tracking with your own AppsFlyer dev key:
+
+To install cordova manually check out the doc [here](/docs/Installation.md).
+
+ ## <a id="guides"> 📖 Guides
+
+Great installation and setup guides can be viewed [here](/docs/Guides.md).
+- [init SDK Guide](/docs/Guides.md#init-sdk)
+- [Deeplinking Guide](/docs/Guides.md#deeplinking)
+- [Uninstall Guide](/docs/Guides.md#uninstall)
+
+
+## <a id="setup"> 🚀 Setup
+
+####  Set your App_ID (iOS only), Dev_Key and enable AppsFlyer to detect installations, sessions (app opens) and updates.  
+> This is the minimum requirement to start tracking your app installs and is already implemented in this plugin. You **MUST** modify this call and provide:  
+ **devKey** - Your application devKey provided by AppsFlyer.<br>
+**appId**  - ***For iOS only.*** Your iTunes Application ID.
+
+
+Add the following lines to your code to be able to initialize tracking with your own AppsFlyer dev key:
+
+
 ```javascript
-document.addEventListener("deviceready", function(){
-    var args = [];
-    var devKey = "xxXXXXXxXxXXXXxXXxxxx8";   // your AppsFlyer devKey
-    args.push(devKey);
-    var userAgent = window.navigator.userAgent.toLowerCase();
-                          
-    if (/iphone|ipad|ipod/.test( userAgent )) {
-        var appId = "123456789";            // your ios app id in app store
-        args.push(appId);
-    }
-	window.plugins.appsFlyer.initSdk(args);
+document.addEventListener('deviceready', function() {
+
+  var options = {
+    devKey: '**********spwL', // your AppsFlyer devKey
+    isDebug: false,
+  };
+
+  var userAgent = window.navigator.userAgent.toLowerCase();
+  if (/iphone|ipad|ipod/.test( userAgent )) {
+    options.appId = '123456789'; // your ios app id in app store        
+  }
+   
+  var onSuccess = function(result) {
+    console.log(result);
+  };
+  
+  function onError(err) {
+    console.log(err);
+  }
+  
+  window.plugins.appsFlyer.initSdk(options, onSuccess, onError);
+  
 }, false);
 ```
 
-## Installation using CLI:
-```
-$ cordova plugin add https://github.com/AppsFlyerSDK/PhoneGap.git
-```
-Then reference `appsflyer.js` in `index.html`, after `cordova.js`/`phonegap.js`. Mind the path:
-```html
-<script type="text/javascript" src="js/plugins/appsflyer.js"></script>
-```
-## Manual installation:
-1\. Add the following xml to your `config.xml` in the root directory of your `www` folder:
-```xml
-<!-- for iOS -->
-<feature name="AppsFlyerPlugin">
-  <param name="ios-package" value="AppsFlyerPlugin" />
-</feature>
-```
-```xml
-<!-- for Android -->
-<feature name="AppsFlyerPlugin">
-  <param name="android-package" value="com.appsflyer.cordova.plugin.AppsFlyerPlugin" />
-</feature>
-```
-2\. For Android, add the following xml to your `AndroidManifest.xml`:
-```xml
-<uses-permission android:name="android.permission.INTERNET" />
-<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-<uses-permission android:name="android.permission.READ_PHONE_STATE" />
-```
-3\. Copy appsflyer.js to `www/js/plugins` and reference it in `index.html`:
-```html
-<script type="text/javascript" src="js/plugins/appsflyer.js"></script>
-```
-4\. Download the source files and copy them to your project.
+---
 
-iOS: Copy `AppsFlyerPlugin.h`, `AppsFlyerPlugin.m`, `AppsFlyerTracker.h` and `libAppsFlyerLib.a` to `platforms/ios/<ProjectName>/Plugins`
 
-Android: Copy `AppsFlyerPlugin.java` to `platforms/android/src/com/appsflyer/cordova/plugins` (create the folders)
-        
-## Usage:
+## <a id="api"> 📑 API
+  
+See the full [API](/docs/API.md) available for this plugin.
 
-#### 1\. Set your App_ID (iOS only), Dev_Key and enable AppsFlyer to detect installations, sessions (app opens), and updates.  
-**Note: ** *This is the minimum requirement to start tracking your app installs and it's already implemented in this plugin. You **_MUST_** modify this call and provide:  *
-- *devKey* - Your application devKey provided by AppsFlyer.
-- *appId*  - **For iOS only.** Your iTunes application id.
-```javascript
-document.addEventListener("deviceready", function(){
-    var args = [];
-    var devKey = "xxXXXXXxXxXXXXxXXxxxx8";   // your AppsFlyer devKey
-    args.push(devKey);
-    var userAgent = window.navigator.userAgent.toLowerCase();
-                          
-    if (/iphone|ipad|ipod/.test( userAgent )) {
-        var appId = "123456789";            // your ios app id in app store
-        args.push(appId);
-    }
-	window.plugins.appsFlyer.initSdk(args);
-}, false);
-```
 
-#### 2\. Set currency code (optional)
-```javascript
-//USD is default value. Acceptable ISO(http://www.xe.com/iso4217.php) Currency codes here. Examples:  
-//British Pound: window.plugins.appsFlyer.setCurrencyCode("GBP");  
-window.plugins.appsFlyer.setCurrencyCode("USD");
-```
-#### 3\. Set customer user ID (Advance)
-*Setting your own custom ID will enable you to cross-reference your own unique ID with AppsFlyer’s user ID and the 
-other devices’ IDs. This ID will be available at AppsFlyer CSV reports along with postbacks APIs for cross-referencing 
-with you internal IDs.*  
-**Note:** *The ID must be set during the first launch of the app at the SDK initialization. The best practice is to call to this API during `deviceready` event if possible.*
-```javascript
-window.plugins.appsFlyer.setAppUserId(userId);
-```
-#### 4\. In App Events Tracking API (optional)
-*These events help you track how loyal users discover your app and attribute them to specific campaign/source.*
-- *These in-app events help you track how loyal users discover your app, and attribute them to specific 
-campaigns/media-sources. Please take the time define the event/s you would like to measure to allow you 
-to track ROI (Return on Investment) and LTV (Lifetime Value).*
-- *The “trackEvent” method allows you to send in-app events to AppsFlyer analytics. This method allows you to 
-add events dynamically by adding them directly to the application code.*
-
-```javascript
-var eventName = "af_add_to_cart";
-var eventValues = {"af_content_id": "id123", "af_currency":"USD", "af_revenue": "2"};
-window.plugins.appsFlyer.trackEvent(eventName, eventValues);
-```
-#### 5\. Get AppsFlyer’s Unique Device UID (Advanced)
-*Get AppsFlyer’s proprietary device ID. AppsFlyer device ID is the main ID used by AppsFlyer in the Reports and API’s.*
-```javascript
-// getUserIdCallbackFn - callback function
-window.plugins.appsFlyer.getAppsFlyerUID(getUserIdCallbackFn);
-```
-###### Example:
-```javascript
-var getUserIdCallbackFn = function(id) {
-	alert('received id is: ' + id);
-}
-window.plugins.appsFlyer.getAppsFlyerUID(getUserIdCallbackFn);
-```
-#### 6\. Accessing AppsFlyer Attribution / Conversion Data from the SDK (Deferred 
-Deep-linking). Read more: [Android](http://support.appsflyer.com/entries/69796693-Accessing-AppsFlyer-Attribution-Conversion-Data-from-the-SDK-Deferred-Deep-linking-), [iOS](http://support.appsflyer.com/entries/22904293-Testing-AppsFlyer-iOS-SDK-Integration-Before-Submitting-to-the-App-Store-)  
-**Note:** AppsFlyer plugin will fire `onInstallConversionDataLoaded` event with attribution data. You must implement listener to receive the data.
-###### Example:
-```javascript
-document.addEventListener('onInstallConversionDataLoaded', function(e){
-	var attributionData = (JSON.stringify(e.detail));
-	alert(attributionData);
-}, false);
-```
+## <a id="demo"> 📱 Demo
+  
+  Check out the demo for this project [here](docs/Guides.md#demo).

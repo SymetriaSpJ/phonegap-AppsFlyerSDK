@@ -37,3 +37,21 @@ test/platforms/ios/AppsFlyer Phonegap.xcodeproj/xcuserdata/golan.xcuserdatad/xcs
 test/platforms/ios/AppsFlyer Phonegap.xcodeproj/xcuserdata/golan.xcuserdatad/xcschemes/xcschememanagement.plist
 test/platforms/ios/CordovaLib/CordovaLib.xcodeproj/xcuserdata/golan.xcuserdatad/xcschemes/CordovaLib.xcscheme
 test/platforms/ios/CordovaLib/CordovaLib.xcodeproj/xcuserdata/golan.xcuserdatad/xcschemes/xcschememanagement.plist
+
+*.csproj.user
+*.suo
+*.cache
+Thumbs.db
+*.DS_Store
+
+*.bak
+*.cache
+*.log
+*.swp
+*.user
+
+node_modules/
+
+
+examples/demoA/node_modules/
+#/examples/demoA/www/lib/
